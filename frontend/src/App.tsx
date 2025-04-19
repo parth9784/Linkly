@@ -1,10 +1,10 @@
 import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { HomePage } from "./components/HomePage";
 import LogInPage from "./components/LoginPage";
 import { SettingPage } from "./components/SettingPage";
 import { ProfilePage } from "./components/ProfilePage";
-import { Navbar } from "./components/Navbar";
+import Navbar from "./components/Navbar";
 import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
@@ -13,6 +13,7 @@ import { Toaster } from "react-hot-toast";
 
 function App() {
   const { authUser, checkAuth, isAuthChecking } = useAuthStore();
+  const location = useLocation();
 
   useEffect(() => {
     checkAuth();
@@ -25,7 +26,9 @@ function App() {
       </div>
     );
   }
-  // console.log(authUser);
+
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/signup";
 
   return (
     <div>
@@ -39,13 +42,14 @@ function App() {
           element={!authUser ? <LogInPage /> : <Navigate to="/" />}
         />
       </Routes>
-      <Navbar />
+
+      {!isAuthPage && <Navbar />}
+
       <Routes>
         <Route
           path="/"
           element={authUser ? <HomePage /> : <Navigate to="/login" />}
         />
-
         <Route
           path="/setting"
           element={authUser ? <SettingPage /> : <Navigate to="/login" />}
@@ -55,6 +59,7 @@ function App() {
           element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
         />
       </Routes>
+
       <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
