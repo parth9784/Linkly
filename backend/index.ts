@@ -6,12 +6,7 @@ const app = express();
 const routes = require("./src/routes/routes");
 const { dbConnect } = require("./src/config/database");
 const cookieParser = require("cookie-parser");
-app.use(
-  cors({
-    origin: process.env.FRONTEND_BASE_URL,
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(routes);

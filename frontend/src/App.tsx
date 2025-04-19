@@ -1,7 +1,6 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { HomePage } from "./components/HomePage";
-import { SignUpPage } from "./components/Signup";
 import { LoginPage } from "./components/LoginPage";
 import { SettingPage } from "./components/SettingPage";
 import { ProfilePage } from "./components/ProfilePage";
@@ -9,6 +8,8 @@ import { Navbar } from "./components/Navbar";
 import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
+import SignUp from "./components/Signup";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { authUser, checkAuth, isAuthChecking } = useAuthStore();
@@ -31,13 +32,23 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={authUser ? <HomePage /> : <Navigate to="/login" />}
+          element={!authUser ? <HomePage /> : <Navigate to="/login" />}
         />
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route
+          path="/signup"
+          element={!authUser ? <SignUp /> : <Navigate to="/" />}
+        />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/setting" element={<SettingPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route
+          path="/setting"
+          element={authUser ? <SettingPage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/profile"
+          element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
+        />
       </Routes>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 }

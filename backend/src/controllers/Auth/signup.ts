@@ -12,8 +12,8 @@ interface user {
 
 export const SignUp = async (req: Request, res: Response) => {
   try {
-    const { name, email, password, profilepic } = req.body;
-    if (!name || !email || !password) {
+    const { fullName, email, password, profilepic } = req.body;
+    if (!fullName || !email || !password) {
       return res.status(400).json({
         success: false,
         message: "Please Provide all the data fields",
@@ -38,7 +38,7 @@ export const SignUp = async (req: Request, res: Response) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     let userObj: user = {
-      fullName: name,
+      fullName,
       email,
       password: hashedPassword,
     };
@@ -54,7 +54,7 @@ export const SignUp = async (req: Request, res: Response) => {
       await newUser.save();
       res.status(201).json({
         success: true,
-        data: { id: newUser._id, name, email, password },
+        data: { id: newUser._id, fullName, email, password },
       });
     } else {
       return res.status(400).json({
