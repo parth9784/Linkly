@@ -54,7 +54,7 @@ export const SignUp = async (req: Request, res: Response) => {
       await newUser.save();
       res.status(201).json({
         success: true,
-        data: { id: newUser._id, fullName, email, password },
+        data: { id: newUser._id, fullName, email },
       });
     } else {
       return res.status(400).json({

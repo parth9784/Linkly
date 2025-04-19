@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { HomePage } from "./components/HomePage";
-import { LoginPage } from "./components/LoginPage";
+import LogInPage from "./components/LoginPage";
 import { SettingPage } from "./components/SettingPage";
 import { ProfilePage } from "./components/ProfilePage";
 import { Navbar } from "./components/Navbar";
@@ -25,20 +25,27 @@ function App() {
       </div>
     );
   }
+  // console.log(authUser);
 
   return (
     <div>
-      <Navbar />
       <Routes>
-        <Route
-          path="/"
-          element={!authUser ? <HomePage /> : <Navigate to="/login" />}
-        />
         <Route
           path="/signup"
           element={!authUser ? <SignUp /> : <Navigate to="/" />}
         />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/login"
+          element={!authUser ? <LogInPage /> : <Navigate to="/" />}
+        />
+      </Routes>
+      <Navbar />
+      <Routes>
+        <Route
+          path="/"
+          element={authUser ? <HomePage /> : <Navigate to="/login" />}
+        />
+
         <Route
           path="/setting"
           element={authUser ? <SettingPage /> : <Navigate to="/login" />}

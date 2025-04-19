@@ -1,10 +1,10 @@
 import { useAuthStore } from "../store/useAuthStore";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Loader2, Lock, Mail, MessageSquare, User } from "lucide-react";
+import { Loader, Loader2, Lock, Mail, MessageSquare, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 const SignUp = () => {
   //   const [showPassword, setShowPassword] = useState(false);
   const { loading, signUp } = useAuthStore();
@@ -44,7 +44,8 @@ const SignUp = () => {
               </div>
               <h1 className="text-2xl font-bold mt-2">Create Account</h1>
               <p className="text-base-content/60">
-                Get started with your free account
+                Get started on{" "}
+                <span className="font-semibold text-white">Linkly</span>
               </p>
             </div>
           </div>
@@ -125,14 +126,20 @@ const SignUp = () => {
               className="btn btn-primary w-[300px] py-2"
               disabled={loading}
             >
+              Create Account{" "}
               {loading ? (
+                <Loader size={15} className="animate-spin text-white" />
+              ) : (
+                ""
+              )}
+              {/* {loading ? (
                 <>
                   <Loader2 className="size-5 animate-spin" />
                   Loading...
                 </>
               ) : (
                 "Create Account"
-              )}
+              )} */}
             </button>
           </form>
 
@@ -151,7 +158,6 @@ const SignUp = () => {
         title="Join our community"
         subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
       />
-      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

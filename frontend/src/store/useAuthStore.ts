@@ -8,6 +8,10 @@ interface signupInfoType {
   email: string;
   password: string;
 }
+interface LoginInfoType {
+  email: string;
+  password: string;
+}
 interface useAuthStoreType {
   authUser: any;
   loading: boolean;
@@ -15,6 +19,8 @@ interface useAuthStoreType {
   checkAuth: () => void;
   setLoading: (value: boolean) => void;
   signUp: (data: signupInfoType) => void;
+  logOut: () => void;
+  logIn: (loginData: LoginInfoType) => void;
 }
 
 export const useAuthStore = create<useAuthStoreType>((set) => ({
@@ -41,13 +47,34 @@ export const useAuthStore = create<useAuthStoreType>((set) => ({
       const response = await axiosInstance.post("/signup", signUpData);
       console.log("this response", response);
       set({ authUser: response.data.data });
-      toast.success("Account created Successfully");
+      toast.success("Welcome Onboard!! Signed Up Successfully!!");
     } catch (error) {
       console.log("error in signing up the user", error);
       set({ loading: false });
-      toast.error("Account creation failed");
+      toast.error("Sign Up failed!!");
     } finally {
       set({ loading: false });
+    }
+  },
+  logIn: async (logInData: LoginInfoType) => {
+    try {
+      const response = await axiosInstance.post("/login", logInData);
+      console.log("Login Successfull");
+      set({ authUser: response.data.data });
+      toast.success("Welcome Back! You have Logged In Successfull!!");
+    } catch (error) {
+      console.log("Error in Login", error);
+      toast.success("Login Failed!!");
+    }
+  },
+  logOut: async () => {
+    try {
+      const response = await axiosInstance.post("/logout");
+      set({ authUser: null });
+      toast.success("Logout Successfully!!");
+    } catch (error) {
+      console.log("Error in Logout");
+      toast.error("Logout Failed!!");
     }
   },
 }));
