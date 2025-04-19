@@ -1,26 +1,44 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { HomePage } from "./components/HomePage";
+import { SignUpPage } from "./components/Signup";
+import { LoginPage } from "./components/LoginPage";
+import { SettingPage } from "./components/SettingPage";
+import { ProfilePage } from "./components/ProfilePage";
+import { Navbar } from "./components/Navbar";
+import { useAuthStore } from "./store/useAuthStore";
+import { useEffect } from "react";
+import { Loader } from "lucide-react";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { authUser, checkAuth, isAuthChecking } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  if (isAuthChecking && !authUser) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader size={36} className="animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <Navbar />
+      <Routes>
+        <Route
+          path="/"
+          element={authUser ? <HomePage /> : <Navigate to="/login" />}
+        />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/setting" element={<SettingPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Routes>
+    </div>
   );
 }
 

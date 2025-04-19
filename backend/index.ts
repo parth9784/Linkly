@@ -1,8 +1,20 @@
 import { Request, Response } from "express";
-
+import express from "express";
+import cors from "cors";
 require("dotenv").config();
-const express = require("express");
 const app = express();
+const routes = require("./src/routes/routes");
+const { dbConnect } = require("./src/config/database");
+const cookieParser = require("cookie-parser");
+app.use(
+  cors({
+    origin: process.env.FRONTEND_BASE_URL,
+    credentials: true,
+  })
+);
+app.use(cookieParser());
+app.use(express.json());
+app.use(routes);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send("<h1>Hi i am a server</h1>");
@@ -10,4 +22,5 @@ app.get("/", (req: Request, res: Response) => {
 
 app.listen(process.env.PORT, () => {
   console.log("server is running at ", process.env.PORT);
+  dbConnect();
 });
