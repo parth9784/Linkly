@@ -29,7 +29,6 @@ const Navbar = () => {
               to={"/settings"}
               className={`
               btn btn-sm gap-2  transition-colors
-              
               `}
             >
               <Settings size={15} />
@@ -42,13 +41,12 @@ const Navbar = () => {
                   <User size={15} />
                   <span className="hidden sm:inline">Profile</span>
                 </Link>
-
                 <button
-                  className="flex gap-2 items-center hover:text-gray-300"
+                  className="flex justify-center gap-2 items-center hover:text-gray-300"
                   onClick={logOut}
                 >
                   <LogOut size={18} />
-                  <span className="hidden sm:inline">Logout</span>
+                  <span className="hidden text-[14px] sm:inline">Logout</span>
                 </button>
               </>
             )}

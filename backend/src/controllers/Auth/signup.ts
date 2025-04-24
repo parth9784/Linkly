@@ -12,6 +12,7 @@ interface user {
 
 export const SignUp = async (req: Request, res: Response) => {
   try {
+    console.log("i m in signup");
     const { fullName, email, password, profilepic } = req.body;
     if (!fullName || !email || !password) {
       return res.status(400).json({
@@ -54,7 +55,13 @@ export const SignUp = async (req: Request, res: Response) => {
       await newUser.save();
       res.status(201).json({
         success: true,
-        data: { id: newUser._id, fullName, email },
+        data: {
+          userid: newUser._id,
+          fullName,
+          email,
+          profilePic: newUser.profilePic,
+          since: newUser.createdAt,
+        },
       });
     } else {
       return res.status(400).json({

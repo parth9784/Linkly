@@ -26,6 +26,10 @@ export const Login = async (req: Request, res: Response) => {
         success: true,
         data: {
           userid: userExist._id,
+          email: userExist.email,
+          profilePic: userExist.profilePic,
+          fullName: userExist.fullName,
+          since: userExist.createdAt,
         },
       });
     } else {

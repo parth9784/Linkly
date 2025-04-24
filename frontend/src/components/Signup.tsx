@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Loader, Loader2, Lock, Mail, MessageSquare, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 const SignUp = () => {
   //   const [showPassword, setShowPassword] = useState(false);
   const { loading, signUp } = useAuthStore();

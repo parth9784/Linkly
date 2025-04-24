@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { HomePage } from "./components/HomePage";
 import LogInPage from "./components/LoginPage";
 import { SettingPage } from "./components/SettingPage";
-import { ProfilePage } from "./components/ProfilePage";
+import ProfilePage  from "./components/ProfilePage";
 import Navbar from "./components/Navbar";
 import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
